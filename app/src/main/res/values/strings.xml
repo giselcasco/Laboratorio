@@ -6,4 +6,14 @@
     <string name="cantPedir">Cantidad a Pedir</string>
     <string name="cantProducto">0</string>
     <string name="btnAgregarProducto">Agregar</string>
+    <string name="pedidoTitulo">Alta Pedido</string>
+    <string name="pedidoCorreo">Correo Electronico</string>
+    <string name="pedidoModoEntrega">Modo Entrega</string>
+    <string name="pedidoDireccion">Direccion</string>
+    <string name="pedidoRetira">Retira en Local</string>
+    <string name="pedidoEnviar">Enviar a Domicilio</string>
+    <string name="pedidoHoraEntrega">Hora de Entrega</string>
+    <string name="pedidoHoraEntregaDefault">00:00</string>
+    <string name="pedidoEdtDefault"></string>
+    <string name="pedidoTotal">Total del Pedido:</string>
 </resources>
