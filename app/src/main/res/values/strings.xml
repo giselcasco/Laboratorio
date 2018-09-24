@@ -6,6 +6,8 @@
     <string name="cantPedir">Cantidad a Pedir</string>
     <string name="cantProducto">0</string>
     <string name="btnAgregarProducto">Agregar</string>
+    <string name="btnNuevoPedido">Nuevo Pedido</string>
+    <string name="historial_de_pedidos">Historial Pedidos </string>
     <string name="pedidoTitulo">Alta Pedido</string>
     <string name="pedidoCorreo">Correo Electronico</string>
     <string name="pedidoModoEntrega">Modo Entrega</string>
