@@ -19,7 +19,6 @@
         tools:layout_editor_absoluteY="16dp" />
 
 
-
     <TextView
         android:id="@+id/tvListaProductos"
         android:layout_width="wrap_content"
