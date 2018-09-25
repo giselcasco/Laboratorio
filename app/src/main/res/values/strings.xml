@@ -15,5 +15,9 @@
     <string name="pedidoHoraEntrega">Hora de Entrega</string>
     <string name="pedidoHoraEntregaDefault">00:00</string>
     <string name="pedidoEdtDefault"></string>
+    <string name="pedidoHacerPedido">Hacer Pedido</string>
+    <string name="pedidoVolver">Volver</string>
+    <string name="pedidoAddProducto">Agregar Producto</string>
+    <string name="pedidoQuitarProducto">Quitar Producto</string>
     <string name="pedidoTotal">Total del Pedido:</string>
 </resources>
