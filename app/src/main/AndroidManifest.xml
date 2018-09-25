@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListaProductosActividad"></activity>
+        <activity android:name=".ListaProductosActivity"></activity>
         <activity android:name=".AltaPedidoActivity"></activity>
     </application>
 
