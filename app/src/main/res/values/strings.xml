@@ -18,4 +18,6 @@
     <string name="pedidoHoraEntregaDefault">00:00</string>
     <string name="pedidoEdtDefault"></string>
     <string name="pedidoTotal">Total del Pedido:</string>
+    <string name="title_activity_historial">historial</string>
+    <string name="title_activity_historial_pedido">HistorialPedidoActivity</string>
 </resources>

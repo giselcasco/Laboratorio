@@ -16,8 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListaProductosActivity"></activity>
-        <activity android:name=".AltaPedidoActivity"></activity>
+        <activity android:name=".ListaProductosActivity" />
+        <activity android:name=".AltaPedidoActivity" />
+        <activity
+            android:name=".HistorialPedidoActivity"
+            android:label="@string/title_activity_historial_pedido"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
