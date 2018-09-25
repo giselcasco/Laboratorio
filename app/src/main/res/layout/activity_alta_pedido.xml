@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".AltaPedidoActivity">
 
     <TextView
@@ -18,7 +18,6 @@
         android:id="@+id/tvPedidoCorreo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:text="@string/pedidoCorreo" />
 
 
@@ -26,35 +25,30 @@
         android:id="@+id/edtPedidoCorreo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:hint="@string/pedidoEdtDefault"
+        android:hint="@string/pedidoCorreo"
         android:inputType="textEmailAddress" />
 
     <TextView
         android:id="@+id/tvPedidoModoEntrega"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:text="@string/pedidoModoEntrega" />
 
     <RadioGroup
         android:id="@+id/optPedidoModoEntrega"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <RadioButton
             android:id="@+id/optPedidoRetira"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/pedidoRetira" />
 
         <RadioButton
             android:id="@+id/optPedidoEnviar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/pedidoEnviar" />
     </RadioGroup>
 
@@ -62,7 +56,6 @@
         android:id="@+id/tvPedidoDireccion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:text="@string/pedidoDireccion" />
 
 
@@ -70,7 +63,6 @@
         android:id="@+id/edtPedidoDireccion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:hint="@string/pedidoEdtDefault"
         android:inputType="text" />
 
@@ -78,7 +70,6 @@
         android:id="@+id/tvPedidoHoraEntrega"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:text="@string/pedidoHoraEntrega" />
 
 
@@ -86,63 +77,57 @@
         android:id="@+id/edtPedidoHoraEntrega"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:hint="@string/pedidoHoraEntregaDefault"
         android:inputType="time" />
 
     <ListView
         android:id="@+id/lstPedidoItems"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_height="80dp"
+        android:choiceMode="multipleChoice"></ListView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnPedidoAddProducto"
-            android:layout_width="match_parent"
+            android:id="@+id/btnPedidoQuitarProducto"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Button" />
+            android:text="@string/pedidoQuitarProducto" />
 
         <Button
-            android:id="@+id/btnPedidoQuitarProducto"
-            android:layout_width="match_parent"
+            android:id="@+id/btnPedidoAddProducto"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Button" />
+            android:text="@string/pedidoAddProducto" />
+
 
         <TextView
             android:id="@+id/lblTotalPedido"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/pedidoTotal" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/llAltaBajaPedido"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnPedidoHacerPedido"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Button" />
+            android:text="@string/pedidoHacerPedido" />
 
         <Button
             android:id="@+id/btnPedidoVolver"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Button" />
+            android:text="@string/pedidoVolver" />
     </LinearLayout>
 
-</LinearLayout>
+</android.support.v7.widget.LinearLayoutCompat>
