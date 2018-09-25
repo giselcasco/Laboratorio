@@ -22,4 +22,6 @@
     <string name="pedidoAddProducto">Agregar Producto</string>
     <string name="pedidoQuitarProducto">Quitar Producto</string>
     <string name="pedidoTotal">Total del Pedido:</string>
+    <string name="title_activity_historial">historial</string>
+    <string name="title_activity_historial_pedido">HistorialPedidoActivity</string>
 </resources>
