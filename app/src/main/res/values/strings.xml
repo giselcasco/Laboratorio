@@ -24,4 +24,7 @@
     <string name="pedidoTotal">Total del Pedido:</string>
     <string name="title_activity_historial">historial</string>
     <string name="title_activity_historial_pedido">HistorialPedidoActivity</string>
+    <string name="btnHistorialNuevo">Nuevo</string>
+    <string name="btnHistorialMenu">Menu</string>
+    <string name ="tvPedidoRealizado">Pedidos Realizados</string>
 </resources>
