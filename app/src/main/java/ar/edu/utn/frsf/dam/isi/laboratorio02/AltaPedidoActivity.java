@@ -36,6 +36,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
     private Button agregarProducto;
     private Button quitarProducto;
     private Button hacerPedido;
+    private Button volver;
     private EditText horaEntrega;
     private EditText edtCorreo;
 
@@ -49,6 +50,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
         ProductoRepository productoRepository = new ProductoRepository();
         agregarProducto=(Button) findViewById(R.id.btnPedidoAddProducto);
         hacerPedido=(Button) findViewById(R.id.btnPedidoHacerPedido);
+        volver = (Button) findViewById(R.id.btnPedidoVolver);
         quitarProducto=(Button)findViewById(R.id.btnPedidoQuitarProducto);
         optPedidoModoEntrega =  (RadioGroup) findViewById(R.id.optPedidoModoEntrega);
         listaProductos = (ListView) findViewById(R.id.lstPedidoItems);
@@ -66,6 +68,12 @@ public class AltaPedidoActivity extends AppCompatActivity {
         productoAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, unPedido.getDetalle());
         listaProductos.setAdapter(productoAdapter);
 
+        volver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         quitarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,6 +102,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
         hacerPedido.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
                 if(horaEntrega.getText().toString().contains(":")) {
                     String[] horaIngresada = horaEntrega.getText().toString().split(":");
                     GregorianCalendar hora = new GregorianCalendar();
@@ -116,22 +125,37 @@ public class AltaPedidoActivity extends AppCompatActivity {
                     hora.set(Calendar.SECOND, Integer.valueOf(0));
                     unPedido.setFecha(hora.getTime());
                 }
+                else{
+                    Toast.makeText(AltaPedidoActivity.this,"Ingrese un horario válido. Ejemplo 12:45",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 // setear el resto de los atributos del pedido
                 if(edtDireccion.isEnabled() && edtDireccion.length()<=0){
                     Toast.makeText(AltaPedidoActivity.this,"Debe Ingresar una Direccion de Envío",Toast.LENGTH_LONG).show();
+                    return;
                 }
+                unPedido.setDireccionEnvio(edtDireccion.getText().toString());
 
-                if(edtCorreo.isEnabled() && edtDireccion.length()<=9){//"@gmail.com".length() =9
+                //Validar Correo Electronico
+                String email = edtCorreo.getText().toString().trim();
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                if(!email.matches(emailPattern) ){
                     Toast.makeText(AltaPedidoActivity.this,"Debe Ingresar un Correo Electrónico válido",Toast.LENGTH_LONG).show();
+                    return;
                 }
+                unPedido.setMailContacto(edtCorreo.getText().toString().trim());
 
                 if(listaProductos.getCount()<=0){
                     Toast.makeText(AltaPedidoActivity.this,"Agregue al menos un producto",Toast.LENGTH_LONG).show();
+                    return;
                 }
+                unPedido.setEstado(Pedido.Estado.REALIZADO);
                 pedidoRepository.guardarPedido(unPedido);
                 // lo seteamos a una nueva instancia para el proximo pedido
                 Pedido unPedido = new Pedido();
                 Log.d("APP_LAB02","Pedido "+ unPedido.toString());
+                finish();
 
     }});
 
@@ -157,10 +181,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
     }
+
+
 }
