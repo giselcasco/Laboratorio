@@ -182,8 +182,8 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 unHilo.start();
 
                 //Log.d("APP_LAB02","Pedido "+ unPedido.toString());
-                //Intent i = new Intent(AltaPedidoActivity.this, HistorialPedidoActivity.class);
-                //startActivity(i);
+                Intent i = new Intent(AltaPedidoActivity.this, HistorialPedidoActivity.class);
+                startActivity(i);
 
     }});
 
