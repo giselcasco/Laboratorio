@@ -1,4 +1,5 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,37 +22,57 @@ public class ListaProductosActivity extends AppCompatActivity {
     // para que se visualicen las categorias de los productos
     private Spinner spinner;
     private ArrayAdapter<Categoria> adapterCategoria;
+    private ArrayAdapter<Producto> productoAdapter;
     private TextView tvcategoria;
-    private ListView listCategoria;
-    private ProductoRepository listaCategoria;
+    private ListView listaProductos;
+    private EditText cantidad;
+    private int idProducto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        final ProductoRepository productoRepository = new ProductoRepository();
         setContentView(R.layout.activity_spinner);
         spinner = (Spinner)findViewById(R.id.spinnerProductosCategoria);
-        adapterCategoria = new ArrayAdapter<Categoria>(this, android.R.layout.simple_spinner_item,listaCategoria.getCategorias());
+        tvcategoria=(TextView) findViewById(R.id.tvSelectCategoria);
+        adapterCategoria = new ArrayAdapter(this, android.R.layout.simple_spinner_item,productoRepository.getCategorias());
         adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterCategoria);
+        listaProductos = (ListView)findViewById(R.id.lstProductos);
+        productoAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, productoRepository.getLista());
+        listaProductos.setAdapter(productoAdapter);
+        cantidad=(EditText)findViewById(R.id.edtProdCantidad);
 
        Button btn2 = (Button) findViewById(R.id.btnProdAddPedido);
-        btn2.setOnClickListener(new View.OnClickListener() {
+       btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent ();
-                startActivity(intent2);
+                // Intent i = new Intent (ListaProductosActivity.this, AltaPedidoActivity.class);
+                Intent i = new Intent();
+                i.putExtra("cantidad", cantidad.getText());
+                i.putExtra("idProducto",idProducto);
+                //startActivity(i);
+                setResult(Activity.RESULT_OK,i);
+                finish();
             }
         });
 
         //e)
-      listCategoria.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        spinner.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Categoria categoria = (Categoria)adapterCategoria.getItem(position);
-                tvcategoria.setText(categoria.getNombre());
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+               Categoria categoria = (Categoria)adapterCategoria.getItem(position);
+               tvcategoria.setText(categoria.getNombre());
+                //productoAdapter.clear();
+               final ArrayAdapter productoAdapter =  new ArrayAdapter(ListaProductosActivity.this, android.R.layout.simple_list_item_multiple_choice, productoRepository.buscarPorCategoria(categoria));
+               productoAdapter.notifyDataSetChanged();
+                listaProductos.setAdapter(productoAdapter);
             }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
+
 
     }
 

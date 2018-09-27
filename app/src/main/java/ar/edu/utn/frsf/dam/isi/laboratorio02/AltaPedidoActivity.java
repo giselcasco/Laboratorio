@@ -1,5 +1,8 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +31,7 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class AltaPedidoActivity extends AppCompatActivity {
-
+    private static final int NUEVO_PEDIDO = 1;
     private RadioGroup optPedidoModoEntrega;
     private EditText edtDireccion;
     private ListView listaProductos;
@@ -39,15 +42,16 @@ public class AltaPedidoActivity extends AppCompatActivity {
     private Button volver;
     private EditText horaEntrega;
     private EditText edtCorreo;
+    private final Pedido unPedido = new Pedido();
+    private final PedidoRepository pedidoRepository = new PedidoRepository();
+    private ProductoRepository productoRepository = new ProductoRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alta_pedido);
 
-        final Pedido unPedido = new Pedido();
-        final PedidoRepository pedidoRepository = new PedidoRepository();
-        ProductoRepository productoRepository = new ProductoRepository();
+
         agregarProducto=(Button) findViewById(R.id.btnPedidoAddProducto);
         hacerPedido=(Button) findViewById(R.id.btnPedidoHacerPedido);
         volver = (Button) findViewById(R.id.btnPedidoVolver);
@@ -58,13 +62,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
         edtDireccion = (EditText) findViewById(R.id.edtPedidoDireccion);
         edtCorreo = (EditText) findViewById(R.id.edtPedidoCorreo);
 
-        //prueba lista detalle pedido
-        Producto producto = new Producto("unProducto","Descripcion producto",1.26,new Categoria());
-        PedidoDetalle detalle = new PedidoDetalle(2,producto);
-        unPedido.agregarDetalle(detalle);
-        producto = new Producto("otroProducto","Descripcion producto dos",36.26,new Categoria());
-        detalle = new PedidoDetalle(2,producto);
-        unPedido.agregarDetalle(detalle);
+
         productoAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, unPedido.getDetalle());
         listaProductos.setAdapter(productoAdapter);
 
@@ -160,13 +158,17 @@ public class AltaPedidoActivity extends AppCompatActivity {
     }});
 
         //Ejercicio 3.H que depende del 2
-        //agregarProducto.onClickListener(new View.OnClickListener(){
-        //   @Override
-        //    public void onClick(View v) {
-               //visualizar la lista de productos del punto 2
-               // onActivityResult(int requestCode, int resultCode, Intent data){
-        //   }
-        //});
+        agregarProducto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(AltaPedidoActivity.this, ListaProductosActivity.class);
+                        i.putExtra("NUEVO_PEDIDO", 1);
+                        startActivityForResult(i,1);
+
+                    }
+                });
+
+
 
         optPedidoModoEntrega.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -181,7 +183,25 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if( resultCode== Activity.RESULT_OK){
+            if(requestCode==NUEVO_PEDIDO){
+                Integer cantidadParam =
+                        data.getExtras().getInt("cantidad");
+                Integer productoParamId =
+                        data.getExtras().getInt("idProducto");
+                unPedido.agregarDetalle(new PedidoDetalle(cantidadParam, productoRepository.buscarPorId(productoParamId)));
+                productoAdapter.notifyDataSetChanged();
+                listaProductos.setAdapter(productoAdapter);
+            }
+        }
+    }
+
 
 
 }
