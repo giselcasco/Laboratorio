@@ -153,7 +153,8 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 // lo seteamos a una nueva instancia para el proximo pedido
                 Pedido unPedido = new Pedido();
                 Log.d("APP_LAB02","Pedido "+ unPedido.toString());
-                finish();
+                Intent i = new Intent(AltaPedidoActivity.this, HistorialPedidoActivity.class);
+                startActivity(i);
 
     }});
 
