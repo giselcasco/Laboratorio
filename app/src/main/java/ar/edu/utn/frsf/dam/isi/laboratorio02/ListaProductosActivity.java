@@ -2,6 +2,7 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,12 +15,14 @@ import android.widget.TextView;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class ListaProductosActivity extends AppCompatActivity {
 
     //c) Crear el adaptador para el Spinner y vincularlo al objeto Spinner
     // para que se visualicen las categorias de los productos
+
     private Spinner spinner;
     private ArrayAdapter<Categoria> adapterCategoria;
     private ArrayAdapter<Producto> productoAdapter;
@@ -27,11 +30,13 @@ public class ListaProductosActivity extends AppCompatActivity {
     private ListView listaProductos;
     private EditText cantidad;
     private int idProducto;
+    private Button agregarProducto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final ProductoRepository productoRepository = new ProductoRepository();
+
         setContentView(R.layout.activity_spinner);
         spinner = (Spinner)findViewById(R.id.spinnerProductosCategoria);
         tvcategoria=(TextView) findViewById(R.id.tvSelectCategoria);
@@ -42,9 +47,23 @@ public class ListaProductosActivity extends AppCompatActivity {
         productoAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, productoRepository.getLista());
         listaProductos.setAdapter(productoAdapter);
         cantidad=(EditText)findViewById(R.id.edtProdCantidad);
+        agregarProducto = (Button) findViewById(R.id.btnProdAddPedido);
 
-       Button btn2 = (Button) findViewById(R.id.btnProdAddPedido);
-       btn2.setOnClickListener(new View.OnClickListener() {
+        Bundle parametros = this.getIntent().getExtras();
+        if(parametros!=null){
+        int datos = parametros.getInt("NUEVO_PEDIDO");
+        if(datos>0){
+            cantidad.setEnabled(true);
+            agregarProducto.setEnabled(true);
+        }
+        }
+        else{
+            cantidad.setEnabled(false);
+            agregarProducto.setEnabled(false);
+        }
+
+
+        agregarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Intent i = new Intent (ListaProductosActivity.this, AltaPedidoActivity.class);
@@ -75,5 +94,6 @@ public class ListaProductosActivity extends AppCompatActivity {
 
 
     }
+
 
 }
