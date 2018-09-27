@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
@@ -152,9 +153,37 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 pedidoRepository.guardarPedido(unPedido);
                 // lo seteamos a una nueva instancia para el proximo pedido
                 Pedido unPedido = new Pedido();
-                Log.d("APP_LAB02","Pedido "+ unPedido.toString());
-                Intent i = new Intent(AltaPedidoActivity.this, HistorialPedidoActivity.class);
-                startActivity(i);
+
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.currentThread().sleep(10000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        // buscar pedidos no aceptados y aceptarlos utomáticamente
+                        List<Pedido> lista = pedidoRepository.getLista();
+                        for(Pedido p:lista){
+                            if(p.getEstado().equals(Pedido.Estado.REALIZADO))
+                                p.setEstado(Pedido.Estado.ACEPTADO);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(AltaPedidoActivity.this,
+                                        "Informacion de pedidos actualizada!",
+                                Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                };
+                Thread unHilo = new Thread(r);
+                unHilo.start();
+
+                //Log.d("APP_LAB02","Pedido "+ unPedido.toString());
+                //Intent i = new Intent(AltaPedidoActivity.this, HistorialPedidoActivity.class);
+                //startActivity(i);
 
     }});
 
