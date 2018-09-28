@@ -21,7 +21,19 @@
         <activity
             android:name=".HistorialPedidoActivity"
             android:label="@string/title_activity_historial_pedido"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver
+            android:name=".EstadoPedidoReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name=".EstadoPedidoReceiver.ESTADO_ACEPTADO"/>
+                <action android:name=".EstadoPedidoReceiver.ESTADO_CANCELADO"/>
+                <action android:name=".EstadoPedidoReceiver.ESTADO_EN_PREPARACION"/>
+                <action android:name=".EstadoPedidoReceiver.ESTADO_LISTO"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

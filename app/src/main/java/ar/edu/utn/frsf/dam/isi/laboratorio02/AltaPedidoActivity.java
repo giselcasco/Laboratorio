@@ -151,8 +151,6 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 }
                 unPedido.setEstado(Pedido.Estado.REALIZADO);
                 pedidoRepository.guardarPedido(unPedido);
-                // lo seteamos a una nueva instancia para el proximo pedido
-                Pedido unPedido = new Pedido();
 
                 Runnable r = new Runnable() {
                     @Override
@@ -164,8 +162,8 @@ public class AltaPedidoActivity extends AppCompatActivity {
                         }
                         // buscar pedidos no aceptados y aceptarlos utomáticamente
                         List<Pedido> lista = pedidoRepository.getLista();
-                        for(Pedido p:lista){
-                            if(p.getEstado().equals(Pedido.Estado.REALIZADO))
+                        for (Pedido p : lista) {
+                            if (p.getEstado().equals(Pedido.Estado.REALIZADO))
                                 p.setEstado(Pedido.Estado.ACEPTADO);
                         }
                         runOnUiThread(new Runnable() {
@@ -173,17 +171,26 @@ public class AltaPedidoActivity extends AppCompatActivity {
                             public void run() {
                                 Toast.makeText(AltaPedidoActivity.this,
                                         "Informacion de pedidos actualizada!",
-                                Toast.LENGTH_LONG).show();
+                                        Toast.LENGTH_LONG).show();
                             }
                         });
+
+                        Intent intent = new Intent(AltaPedidoActivity.this, EstadoPedidoReceiver.class);
+                        intent.putExtra("idPedido", unPedido.getId());
+                        intent.setAction("ESTADO_ACEPTADO");
+                        startActivity(intent);
                     }
                 };
                 Thread unHilo = new Thread(r);
                 unHilo.start();
 
-                //Log.d("APP_LAB02","Pedido "+ unPedido.toString());
                 Intent i = new Intent(AltaPedidoActivity.this, HistorialPedidoActivity.class);
+
+                // lo seteamos a una nueva instancia para el proximo pedido
+                Pedido unPedido = new Pedido();
                 startActivity(i);
+                //Log.d("APP_LAB02","Pedido "+ unPedido.toString());
+
 
     }});
 
