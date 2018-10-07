@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -84,7 +84,8 @@
         android:id="@+id/lstPedidoItems"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:choiceMode="multipleChoice"></ListView>
+        android:choiceMode="multipleChoice">
+    </ListView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -128,6 +129,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pedidoVolver" />
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancelar" />
     </LinearLayout>
 
-</android.support.v7.widget.LinearLayoutCompat>
+</LinearLayout>

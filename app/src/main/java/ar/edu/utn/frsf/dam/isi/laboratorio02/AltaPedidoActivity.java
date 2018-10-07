@@ -41,6 +41,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
     private Button quitarProducto;
     private Button hacerPedido;
     private Button volver;
+    private Button cancelarPedido;
     private EditText horaEntrega;
     private EditText edtCorreo;
     private final Pedido unPedido = new Pedido();
@@ -56,6 +57,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
         agregarProducto=(Button) findViewById(R.id.btnPedidoAddProducto);
         hacerPedido=(Button) findViewById(R.id.btnPedidoHacerPedido);
         volver = (Button) findViewById(R.id.btnPedidoVolver);
+        cancelarPedido = (Button) findViewById(R.id.btnCancelar);
         quitarProducto=(Button)findViewById(R.id.btnPedidoQuitarProducto);
         optPedidoModoEntrega =  (RadioGroup) findViewById(R.id.optPedidoModoEntrega);
         listaProductos = (ListView) findViewById(R.id.lstPedidoItems);
@@ -210,6 +212,17 @@ public class AltaPedidoActivity extends AppCompatActivity {
                     case R.id.optPedidoEnviar:
                         edtDireccion.setEnabled(true);
                         break;
+                }
+            }
+        });
+
+        cancelarPedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(unPedido.getEstado() == Pedido.Estado.ACEPTADO
+                        || unPedido.getEstado() == Pedido.Estado.REALIZADO
+                        || unPedido.getEstado() == Pedido.Estado.EN_PREPARACION){
+                        pedidoRepository.eliminarPedido(unPedido);
                 }
             }
         });

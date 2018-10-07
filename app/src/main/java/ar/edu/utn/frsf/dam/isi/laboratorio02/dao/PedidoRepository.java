@@ -23,6 +23,12 @@ public class PedidoRepository {
         LISTA_PEDIDOS.add(p);
     }
 
+    public void eliminarPedido(Pedido p){
+        if(p.getId()!=null && p.getId()>0) {
+            LISTA_PEDIDOS.remove(p);
+        }
+    }
+
     public Pedido buscarPorId(Integer id){
         for(Pedido p: LISTA_PEDIDOS){
             if(p.getId().equals(id)) return p;

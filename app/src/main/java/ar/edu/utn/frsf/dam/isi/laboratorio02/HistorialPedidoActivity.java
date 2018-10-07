@@ -18,7 +18,6 @@ public class HistorialPedidoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historial_pedido);
 
-//        crea un intent explicito para ir a la actividad de creación de pedido
         btnNuevo = (Button) findViewById(R.id.btnHistorialNuevo);
         btnNuevo.setOnClickListener(new View.OnClickListener() {
             @Override
