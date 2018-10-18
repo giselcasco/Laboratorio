@@ -18,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -44,6 +45,8 @@ public class AltaPedidoActivity extends AppCompatActivity {
     private Button cancelarPedido;
     private EditText horaEntrega;
     private EditText edtCorreo;
+    private TextView totalPedido;
+    private double precioTotal;
     private final Pedido unPedido = new Pedido();
     private final PedidoRepository pedidoRepository = new PedidoRepository();
     private ProductoRepository productoRepository = new ProductoRepository();
@@ -64,17 +67,41 @@ public class AltaPedidoActivity extends AppCompatActivity {
         horaEntrega=(EditText) findViewById(R.id.edtPedidoHoraEntrega);
         edtDireccion = (EditText) findViewById(R.id.edtPedidoDireccion);
         edtCorreo = (EditText) findViewById(R.id.edtPedidoCorreo);
-
-
+        totalPedido = (TextView) findViewById(R.id.lblTotalPedido);
         productoAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, unPedido.getDetalle());
         listaProductos.setAdapter(productoAdapter);
-
+        precioTotal = 0;
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        //Punto 4 - Item a
+        Intent i1= getIntent();
+        int idPedido = 0;
+        if(i1.getExtras()!=null){
+            idPedido = i1.getExtras().getInt("ID_PEDIDO");
+        }
+        if(idPedido>0){
+            Pedido unPedido = pedidoRepository.buscarPorId(idPedido);
+            edtCorreo.setText(unPedido.getMailContacto());
+            edtDireccion.setText(unPedido.getDireccionEnvio());
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            horaEntrega.setText(sdf.format(unPedido.getFecha()));
+            boolean retira = unPedido.getRetirar();
+           if(retira) {
+               edtDireccion.setEnabled(false);
+           }
+           else{
+               edtDireccion.setEnabled(true);
+                    edtDireccion.setText(unPedido.getDireccionEnvio());
+            }
+        }else {
+            Pedido unPedido = new Pedido();
+        }
+
         quitarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -216,13 +243,14 @@ public class AltaPedidoActivity extends AppCompatActivity {
             }
         });
 
+        //Punto 4 - Item b
         cancelarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(unPedido.getEstado() == Pedido.Estado.ACEPTADO
                         || unPedido.getEstado() == Pedido.Estado.REALIZADO
                         || unPedido.getEstado() == Pedido.Estado.EN_PREPARACION){
-                        pedidoRepository.eliminarPedido(unPedido);
+                        unPedido.setEstado(Pedido.Estado.CANCELADO);
                 }
             }
         });
@@ -238,7 +266,11 @@ public class AltaPedidoActivity extends AppCompatActivity {
                         data.getExtras().getInt("cantidad");
                 Integer productoParamId =
                         data.getExtras().getInt("idProducto");
-                unPedido.agregarDetalle(new PedidoDetalle(cantidadParam, productoRepository.buscarPorId(productoParamId)));
+                Producto unProducto = productoRepository.buscarPorId(productoParamId);
+                unPedido.agregarDetalle(new PedidoDetalle(cantidadParam, unProducto));
+                precioTotal = precioTotal + unProducto.getPrecio() * cantidadParam;
+
+                totalPedido.setText(totalPedido.getText().toString() + precioTotal);
                 productoAdapter.notifyDataSetChanged();
                 listaProductos.setAdapter(productoAdapter);
             }

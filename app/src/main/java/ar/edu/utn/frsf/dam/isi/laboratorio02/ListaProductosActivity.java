@@ -58,6 +58,7 @@ public class ListaProductosActivity extends AppCompatActivity {
         if(parametros!=null){
             int datos = parametros.getInt("NUEVO_PEDIDO");
             if(datos>0){
+                cantidad.setText("1");
                 cantidad.setEnabled(true);
                 agregarProducto.setEnabled(true);
             }
