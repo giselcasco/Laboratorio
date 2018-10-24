@@ -34,6 +34,7 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class AltaPedidoActivity extends AppCompatActivity {
     private static final int NUEVO_PEDIDO = 1;
+    private static final int ID_PEDIDO = 0;
     private RadioGroup optPedidoModoEntrega;
     private EditText edtDireccion;
     private ListView listaProductos;
@@ -158,7 +159,6 @@ public class AltaPedidoActivity extends AppCompatActivity {
                     return;
                 }
 
-                // setear el resto de los atributos del pedido
                 if(edtDireccion.isEnabled() && edtDireccion.length()<=0){
                     Toast.makeText(AltaPedidoActivity.this,"Debe Ingresar una Direccion de Envío",Toast.LENGTH_LONG).show();
                     return;
@@ -235,9 +235,11 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 switch(checkedId){
                     case R.id.optPedidoRetira:
                         edtDireccion.setEnabled(false);
+                        unPedido.setRetirar(true);
                         break;
                     case R.id.optPedidoEnviar:
                         edtDireccion.setEnabled(true);
+                        unPedido.setRetirar(false);
                         break;
                 }
             }
@@ -259,18 +261,19 @@ public class AltaPedidoActivity extends AppCompatActivity {
 
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if( resultCode== Activity.RESULT_OK){
-            if(requestCode==NUEVO_PEDIDO){
-                Integer cantidadParam =
+            if(requestCode==NUEVO_PEDIDO) {
+
+                int cantidadParam =
                         data.getExtras().getInt("cantidad");
-                Integer productoParamId =
+                int productoParamId =
                         data.getExtras().getInt("idProducto");
                 Producto unProducto = productoRepository.buscarPorId(productoParamId);
                 unPedido.agregarDetalle(new PedidoDetalle(cantidadParam, unProducto));
                 precioTotal = precioTotal + unProducto.getPrecio() * cantidadParam;
 
-                totalPedido.setText(totalPedido.getText().toString() + precioTotal);
+                totalPedido.setText("Total del Pedido: $"+ precioTotal);
                 productoAdapter.notifyDataSetChanged();
                 listaProductos.setAdapter(productoAdapter);
             }

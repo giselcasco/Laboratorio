@@ -41,6 +41,7 @@ public class Pedido {
     }
 
     public Pedido() {
+
         this.detalle =new ArrayList<>();
     }
 

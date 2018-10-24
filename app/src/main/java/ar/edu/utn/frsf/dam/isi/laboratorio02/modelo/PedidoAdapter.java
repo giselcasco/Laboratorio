@@ -1,8 +1,9 @@
-package ar.edu.utn.frsf.dam.isi.laboratorio02.dao;
+package ar.edu.utn.frsf.dam.isi.laboratorio02.modelo;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
         this.datos = lista;
     }
 
+    @Override
     public View getView(int position, View convertView, ViewGroup parent){
         LayoutInflater inflater = LayoutInflater.from(this.ctx);
         View filaHistorial = convertView;
@@ -38,10 +40,11 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
             holderPedido = new PedidoHolder(filaHistorial);
             filaHistorial.setTag(holderPedido);
         }
-        holderPedido.tvMailPedido.setText(algunPedido.getMailContacto().toString());
-        holderPedido.tvCantidadItems.setText(algunPedido.getDetalle().size());
-        holderPedido.tvHoraEntrega.setText(algunPedido.getFecha().toString());
-        holderPedido.tvPrecio.setText(algunPedido.total().toString());
+        holderPedido.tvMailPedido.setText("Contacto: "+algunPedido.getMailContacto().toString());
+        holderPedido.tvCantidadItems.setText("Items: "+algunPedido.getDetalle().size());
+        holderPedido.tvHoraEntrega.setText("Fecha de Entrega: "+algunPedido.getFecha().toString());
+        String precio =String.valueOf(algunPedido.total());
+        holderPedido.tvPrecio.setText("Total a pagar: $"+precio);
 
         if(algunPedido.getRetirar()){
             holderPedido.tipoEntrega.setImageResource(R.drawable.ic_launcher_background);
@@ -51,27 +54,37 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
 
         switch (algunPedido.getEstado()){
             case LISTO:
+                holderPedido.estado.setText("LISTO");
                 holderPedido.estado.setTextColor(Color.DKGRAY);
                 break;
             case ENTREGADO:
+                holderPedido.estado.setText("ENTREGADO");
                 holderPedido.estado.setTextColor(Color.BLUE);
                 break;
             case CANCELADO:
+                holderPedido.estado.setText("CANCELADO");
+                holderPedido.estado.setTextColor(Color.RED);
             case RECHAZADO:
+                holderPedido.estado.setText("RECHAZADO");
                 holderPedido.estado.setTextColor(Color.RED);
                 break;
             case ACEPTADO:
+                holderPedido.estado.setText("ACEPTADO");
                 holderPedido.estado.setTextColor(Color.GREEN);
                 break;
             case EN_PREPARACION:
+                holderPedido.estado.setText("EN_PREPARACION");
                 holderPedido.estado.setTextColor(Color.MAGENTA);
                 break;
             case REALIZADO:
+                holderPedido.estado.setText("REALIZADO");
                 holderPedido.estado.setTextColor(Color.BLUE);
                 break;
         }
 
         return filaHistorial;
+
+    }
 
 
         // new View.OnClickListener() {
@@ -88,7 +101,21 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
 //            }
 //        }
 //    };
+
+        @Override
+        public  int  getCount()  {
+            return  this.datos.size();
+        }
+
+    @Nullable
+    @Override
+    public Pedido getItem(int position) {
+        return super.getItem(position);
     }
 
+    @Override
+    public void remove(@Nullable Pedido object) {
+        super.remove(object);
+    }
 
 }

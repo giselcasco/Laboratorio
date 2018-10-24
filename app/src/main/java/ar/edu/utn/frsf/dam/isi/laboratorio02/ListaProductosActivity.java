@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -72,12 +74,14 @@ public class ListaProductosActivity extends AppCompatActivity {
         agregarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Intent i = new Intent (ListaProductosActivity.this, AltaPedidoActivity.class);
-
+                int posicion  = listaProductos.getCheckedItemPosition();
+                Producto unProducto=productoAdapter.getItem(posicion);
+                idProducto=unProducto.getId();
                 if(Integer.parseInt(cantidad.getText().toString()) > 0){
                     Intent i = new Intent();
-                    i.putExtra("cantidad", cantidad.getText());
+                    i.putExtra("cantidad", Integer.parseInt(cantidad.getText().toString()));
                     i.putExtra("idProducto",idProducto);
+
                     //startActivity(i);
                     setResult(Activity.RESULT_OK,i);
                     finish();

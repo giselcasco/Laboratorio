@@ -25,5 +25,6 @@ public class PedidoHolder {
         this.tipoEntrega = (ImageView) base.findViewById(R.id.tipoEntrega);
         this.btnCancelar = (Button) base.findViewById(R.id.btnCancelar);
         this.btnVerDetalle = (Button) base.findViewById(R.id.btnVerDetallePedido);
+        this.tvPrecio = (TextView)base.findViewById(R.id.tvPrecio);
     }
 }
