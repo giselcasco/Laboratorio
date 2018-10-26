@@ -1,6 +1,7 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02.modelo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.AltaPedidoActivity;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.HistorialPedidoActivity;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.R;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoHolder;
@@ -34,7 +37,7 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
         if(filaHistorial==null) {
             filaHistorial = inflater.inflate(R.layout.fila_historial, parent, false);
         }
-        Pedido algunPedido = (Pedido) super.getItem(position);
+        final Pedido algunPedido = (Pedido) super.getItem(position);
         PedidoHolder holderPedido = (PedidoHolder) filaHistorial.getTag();
         if(holderPedido==null){
             holderPedido = new PedidoHolder(filaHistorial);
@@ -81,6 +84,19 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
                 holderPedido.estado.setTextColor(Color.BLUE);
                 break;
         }
+        holderPedido.btnVerDetalle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int item = algunPedido.getId();
+
+                Intent i = new Intent(ctx,AltaPedidoActivity.class);
+                i.putExtra("ID_PEDIDO", item);
+                ctx.startActivity(i);
+
+            }
+        }
+
+        );
 
         return filaHistorial;
 
