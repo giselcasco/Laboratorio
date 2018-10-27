@@ -92,6 +92,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
             horaEntrega.setText(sdf.format(unPedido.getFecha()));
             boolean retira = unPedido.getRetirar();
+            totalPedido.setText("Total del Pedido: $"+ unPedido.total().toString());
            if(retira) {
                edtDireccion.setEnabled(false);
            }

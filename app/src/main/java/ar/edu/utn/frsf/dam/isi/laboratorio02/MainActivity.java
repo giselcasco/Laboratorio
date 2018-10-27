@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         btnNuevoPedido = (Button) findViewById(R.id.btnMainNuevoPedido);
         btnNuevoPedido.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
         //        CharSequence name = getString(R.string.canal_estado_nombre);
         //        String description = getString(R.string.canal_estado_descr);
-                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+ //               int importance = NotificationManager.IMPORTANCE_DEFAULT;
                 //NotificationChannel channel;
                 ///channel = new NotificationChannel("CANAL01", name, importance);
                 //channel.setDescription(description);
