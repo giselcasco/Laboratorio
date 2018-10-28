@@ -103,7 +103,7 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
                     return;
                 }
             }
-        });
+        });  //hj
 
 
         //para el commit
