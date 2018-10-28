@@ -27,4 +27,6 @@ public class PedidoHolder {
         this.btnVerDetalle = (Button) base.findViewById(R.id.btnVerDetallePedido);
         this.tvPrecio = (TextView)base.findViewById(R.id.tvPrecio);
     }
+
+
 }

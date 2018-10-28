@@ -48,7 +48,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
     private EditText edtCorreo;
     private TextView totalPedido;
     private double precioTotal;
-    private final Pedido unPedido = new Pedido();
+    private Pedido unPedido = new Pedido();
     private final PedidoRepository pedidoRepository = new PedidoRepository();
     private ProductoRepository productoRepository = new ProductoRepository();
 
@@ -86,11 +86,12 @@ public class AltaPedidoActivity extends AppCompatActivity {
             idPedido = i1.getExtras().getInt("ID_PEDIDO");
         }
         if(idPedido>0){
-            Pedido unPedido = pedidoRepository.buscarPorId(idPedido);
+            unPedido = pedidoRepository.buscarPorId(idPedido);
             edtCorreo.setText(unPedido.getMailContacto());
             edtDireccion.setText(unPedido.getDireccionEnvio());
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
             horaEntrega.setText(sdf.format(unPedido.getFecha()));
+            totalPedido.setText("Total del Pedido: $" + unPedido.total().toString());
             boolean retira = unPedido.getRetirar();
            if(retira) {
                edtDireccion.setEnabled(false);
@@ -100,7 +101,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
                     edtDireccion.setText(unPedido.getDireccionEnvio());
             }
         }else {
-            Pedido unPedido = new Pedido();
+            unPedido = new Pedido();
         }
 
         quitarProducto.setOnClickListener(new View.OnClickListener() {
@@ -180,8 +181,8 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 }
                 unPedido.setEstado(Pedido.Estado.REALIZADO);
                 pedidoRepository.guardarPedido(unPedido);
-                // lo seteamos a una nueva instancia para el proximo pedido
-                Pedido unPedido = new Pedido();
+                Intent i = new Intent(AltaPedidoActivity.this, HistorialPedidoActivity.class);
+                startActivity(i);
 
                 Runnable r = new Runnable() {
                     @Override
@@ -210,9 +211,8 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 Thread unHilo = new Thread(r);
                 unHilo.start();
 
-                //Log.d("APP_LAB02","Pedido "+ unPedido.toString());
-                Intent i = new Intent(AltaPedidoActivity.this, HistorialPedidoActivity.class);
-                startActivity(i);
+
+                finish();
 
     }});
 
@@ -274,6 +274,8 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 precioTotal = precioTotal + unProducto.getPrecio() * cantidadParam;
 
                 totalPedido.setText("Total del Pedido: $"+ precioTotal);
+                productoAdapter=new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, unPedido.getDetalle());
+                //productoAdapter.addAll(unPedido.getDetalle());
                 productoAdapter.notifyDataSetChanged();
                 listaProductos.setAdapter(productoAdapter);
             }

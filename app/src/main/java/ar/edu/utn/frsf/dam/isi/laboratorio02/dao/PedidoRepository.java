@@ -18,10 +18,10 @@ public class PedidoRepository {
         if(p.getId()!=null && p.getId()>0) {
             LISTA_PEDIDOS.remove(p);
         }else{
-            int idNuevo = 0;
+            int idNuevo = GENERADOR_ID_PEDIDO ++;
             for(Pedido pl: LISTA_PEDIDOS){
-                if(p.getId() > idNuevo) {
-                    idNuevo=p.getId();
+                if(pl.getId() > idNuevo) {
+                    idNuevo=pl.getId();
                 }
             }
             idNuevo++;

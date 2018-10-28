@@ -45,6 +45,7 @@ public class HistorialPedidoActivity extends AppCompatActivity {
             }
         });
 
+
         btnNuevo = (Button) findViewById(R.id.btnHistorialNuevo);
         btnNuevo.setOnClickListener(new View.OnClickListener() {
             @Override

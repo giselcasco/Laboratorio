@@ -34,7 +34,7 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
         if(filaHistorial==null) {
             filaHistorial = inflater.inflate(R.layout.fila_historial, parent, false);
         }
-        Pedido algunPedido = (Pedido) super.getItem(position);
+        final Pedido algunPedido = (Pedido) getItem(position);
         PedidoHolder holderPedido = (PedidoHolder) filaHistorial.getTag();
         if(holderPedido==null){
             holderPedido = new PedidoHolder(filaHistorial);
@@ -47,9 +47,9 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
         holderPedido.tvPrecio.setText("Total a pagar: $"+precio);
 
         if(algunPedido.getRetirar()){
-            holderPedido.tipoEntrega.setImageResource(R.drawable.ic_launcher_background);
+            holderPedido.tipoEntrega.setImageResource(R.drawable.retira);
         }else{
-            holderPedido.tipoEntrega.setImageResource(R.drawable.ic_launcher_foreground);
+            holderPedido.tipoEntrega.setImageResource(R.drawable.envio);
         }
 
         switch (algunPedido.getEstado()){
@@ -82,40 +82,54 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
                 break;
         }
 
+        holderPedido.btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int  indice; //devuelve Null el getTag()
+                Object object = v.getTag();
+
+                if(object==null){
+                    indice = 0;
+                }
+                else{
+                    indice=(int)object;
+                }
+                //Pedido pedidoSeleccionado = datos.get(indice);
+                if( algunPedido.getEstado().equals(Pedido.Estado.REALIZADO)||
+                        algunPedido.getEstado().equals(Pedido.Estado.ACEPTADO)||
+                        algunPedido.getEstado().equals(Pedido.Estado.EN_PREPARACION)){
+                    algunPedido.setEstado(Pedido.Estado.CANCELADO);
+                    PedidoAdapter.this.notifyDataSetChanged();
+                    return;
+                }
+            }
+        });
+
+
+        //para el commit
         return filaHistorial;
 
     }
 
-
-        // new View.OnClickListener() {
-        //@Override
-        //public void onClick(View view) {
-//            int  indice = (int) view.getTag();
-//            Pedido pedidoSeleccionado = datos.get(indice);
-//            if( pedidoSeleccionado.getEstado().equals(Pedido.Estado.REALIZADO)||
-//                    pedidoSeleccionado.getEstado().equals(Pedido.Estado.ACEPTADO)||
-//                    pedidoSeleccionado.getEstado().equals(Pedido.Estado.EN_PREPARACION)){
-//                pedidoSeleccionado.setEstado(Pedido.Estado.CANCELADO);
-//                PedidoAdapter.this.notifyDataSetChanged();
-//                return;
-//            }
-//        }
-//    };
 
         @Override
         public  int  getCount()  {
             return  this.datos.size();
         }
 
-    @Nullable
+
     @Override
     public Pedido getItem(int position) {
-        return super.getItem(position);
+        return datos.get(position);
     }
 
     @Override
-    public void remove(@Nullable Pedido object) {
-        super.remove(object);
+    public long getItemId(int position) {
+        return datos.indexOf(getItem(position));
+    }
+    @Override
+    public void remove( Pedido object) {
+        datos.remove(object);
     }
 
 }

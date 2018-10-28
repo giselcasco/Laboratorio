@@ -101,9 +101,9 @@ public class ListaProductosActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                Categoria categoria = (Categoria)adapterCategoria.getItem(position);
                tvcategoria.setText(categoria.getNombre());
-               final ArrayAdapter productoAdapter =  new ArrayAdapter(ListaProductosActivity.this, android.R.layout.simple_list_item_multiple_choice, productoRepository.buscarPorCategoria(categoria));
+               productoAdapter =  new ArrayAdapter(ListaProductosActivity.this, android.R.layout.simple_list_item_multiple_choice, productoRepository.buscarPorCategoria(categoria));
                productoAdapter.notifyDataSetChanged();
-                listaProductos.setAdapter(productoAdapter);
+               listaProductos.setAdapter(productoAdapter);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
