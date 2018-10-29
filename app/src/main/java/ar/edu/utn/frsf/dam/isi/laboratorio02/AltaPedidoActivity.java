@@ -93,6 +93,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
             horaEntrega.setText(sdf.format(unPedido.getFecha()));
             totalPedido.setText("Total del Pedido: $" + unPedido.total().toString());
             boolean retira = unPedido.getRetirar();
+            totalPedido.setText("Total del Pedido: $"+ unPedido.total().toString());
            if(retira) {
                edtDireccion.setEnabled(false);
            }

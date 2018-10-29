@@ -67,10 +67,6 @@ public class HistorialPedidoActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
 }
 
     }
