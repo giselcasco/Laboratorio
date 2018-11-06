@@ -16,6 +16,10 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 
 public class EstadoPedidoReceiver extends BroadcastReceiver {
     public static String ESTADO_ACEPTADO="ar.edu.utn.frsf.dam.isi.laboratorio2.ESTADO_ACEPTADO";
+    public static String ESTADO_CANCELADO = "ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_CANCELADO";
+    public static String ESTADO_EN_PREPARACION = "ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_EN_PREPARACION";
+    public static String ESTADO_LISTO = "ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_LISTO";
+
     private Pedido pedido = new Pedido();
     private ProductoRepository productoRepository= new ProductoRepository();
     private PedidoRepository pedidoRepository=new PedidoRepository();
@@ -46,6 +50,12 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
                     + " ha cambiado de estado a aceptado",Toast.LENGTH_LONG).show();
             notification.notify();
 
+        }
+
+        if(intent.getAction().equals(ESTADO_EN_PREPARACION)){
+            Toast.makeText(context,"Pedido para "
+                    + pedido.getMailContacto().toString()
+                    + " ha cambiado de estado a ESTADO_EN_PREPARACION",Toast.LENGTH_LONG).show();
         }
 
     }

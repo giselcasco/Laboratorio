@@ -31,7 +31,7 @@
     <string name="canal_estado_nombre">Delivery</string>
     <string name="cancelar">Cancelar</string>
     <string name="verDetalle">Ver Detalle</string>
-
+    <string name="prepararPedido">Preparar Pedidos</string>
     <string name="mailPedido">Contacto: </string>
     <string name="horaEntrega">Fecha de Entrega: </string>
     <string name="cantidadItemsPedido">Items: </string>
