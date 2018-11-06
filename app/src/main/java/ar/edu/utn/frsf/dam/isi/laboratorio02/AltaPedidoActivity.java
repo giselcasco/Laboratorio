@@ -32,6 +32,7 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
+
 public class AltaPedidoActivity extends AppCompatActivity {
     private static final int NUEVO_PEDIDO = 1;
     private static final int ID_PEDIDO = 0;
@@ -94,12 +95,18 @@ public class AltaPedidoActivity extends AppCompatActivity {
             totalPedido.setText("Total del Pedido: $" + unPedido.total().toString());
             boolean retira = unPedido.getRetirar();
             totalPedido.setText("Total del Pedido: $"+ unPedido.total().toString());
-           if(retira) {
+            productoAdapter=new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, unPedido.getDetalle());
+            productoAdapter.notifyDataSetChanged();
+            listaProductos.setAdapter(productoAdapter);
+
+            if(retira) {
+                optPedidoModoEntrega.check(R.id.optPedidoRetira);
                edtDireccion.setEnabled(false);
            }
            else{
-               edtDireccion.setEnabled(true);
-                    edtDireccion.setText(unPedido.getDireccionEnvio());
+                optPedidoModoEntrega.check(R.id.optPedidoEnviar);
+                edtDireccion.setEnabled(true);
+                edtDireccion.setText(unPedido.getDireccionEnvio());
             }
         }else {
             unPedido = new Pedido();
@@ -193,11 +200,18 @@ public class AltaPedidoActivity extends AppCompatActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        // buscar pedidos no aceptados y aceptarlos utomáticamente
+                        // buscar pedidos no aceptados y aceptarlos automáticamente
                         List<Pedido> lista = pedidoRepository.getLista();
                         for(Pedido p:lista){
-                            if(p.getEstado().equals(Pedido.Estado.REALIZADO))
+                            if(p.getEstado().equals(Pedido.Estado.REALIZADO)) {
                                 p.setEstado(Pedido.Estado.ACEPTADO);
+                                Intent i = new Intent();
+                                i.setAction(EstadoPedidoReceiver.ESTADO_ACEPTADO);
+                                i.putExtra("idPedido",p.getId());
+                                sendBroadcast(i);
+
+                            }
+
                         }
                         runOnUiThread(new Runnable() {
                             @Override
@@ -276,7 +290,6 @@ public class AltaPedidoActivity extends AppCompatActivity {
 
                 totalPedido.setText("Total del Pedido: $"+ precioTotal);
                 productoAdapter=new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, unPedido.getDetalle());
-                //productoAdapter.addAll(unPedido.getDetalle());
                 productoAdapter.notifyDataSetChanged();
                 listaProductos.setAdapter(productoAdapter);
             }

@@ -27,7 +27,8 @@
     <string name="btnHistorialNuevo">Nuevo</string>
     <string name="btnHistorialMenu">Menu</string>
     <string name ="tvPedidoRealizado">Pedidos Realizados</string>
-
+    <string name="canal_estado_descr">Laboratorio 03 - Parte 02</string>
+    <string name="canal_estado_nombre">Delivery</string>
     <string name="cancelar">Cancelar</string>
     <string name="verDetalle">Ver Detalle</string>
 

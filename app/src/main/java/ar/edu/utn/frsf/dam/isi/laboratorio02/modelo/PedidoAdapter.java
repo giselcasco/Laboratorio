@@ -55,30 +55,30 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
 
         switch (algunPedido.getEstado()){
             case LISTO:
-                holderPedido.estado.setText("LISTO");
+                holderPedido.estado.setText("Estado: LISTO");
                 holderPedido.estado.setTextColor(Color.DKGRAY);
                 break;
             case ENTREGADO:
-                holderPedido.estado.setText("ENTREGADO");
+                holderPedido.estado.setText("Estado: ENTREGADO");
                 holderPedido.estado.setTextColor(Color.BLUE);
                 break;
             case CANCELADO:
-                holderPedido.estado.setText("CANCELADO");
+                holderPedido.estado.setText("Estado: CANCELADO");
                 holderPedido.estado.setTextColor(Color.RED);
             case RECHAZADO:
-                holderPedido.estado.setText("RECHAZADO");
+                holderPedido.estado.setText("Estado: RECHAZADO");
                 holderPedido.estado.setTextColor(Color.RED);
                 break;
             case ACEPTADO:
-                holderPedido.estado.setText("ACEPTADO");
+                holderPedido.estado.setText("Estado: ACEPTADO");
                 holderPedido.estado.setTextColor(Color.GREEN);
                 break;
             case EN_PREPARACION:
-                holderPedido.estado.setText("EN_PREPARACION");
+                holderPedido.estado.setText("Estado: EN_PREPARACION");
                 holderPedido.estado.setTextColor(Color.MAGENTA);
                 break;
             case REALIZADO:
-                holderPedido.estado.setText("REALIZADO");
+                holderPedido.estado.setText("Estado: REALIZADO");
                 holderPedido.estado.setTextColor(Color.BLUE);
                 break;
         }
