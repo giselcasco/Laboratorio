@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">Laboratorio02</string>
+    <string name="main_titulo">Menu de opciones</string>
+    <string name="selectCategoria">Seleccionar una categoría</string>
+    <string name="productList">Lista de Productos</string>
+    <string name="cantPedir">Cantidad a Pedir</string>
+    <string name="cantProducto">0</string>
+    <string name="btnAgregarProducto">Agregar</string>
+    <string name="btnNuevoPedido">Nuevo Pedido</string>
+    <string name="historial_de_pedidos">Historial Pedidos </string>
+    <string name="pedidoTitulo">Alta Pedido</string>
+    <string name="pedidoCorreo">Correo Electronico</string>
+    <string name="pedidoModoEntrega">Modo Entrega</string>
+    <string name="pedidoDireccion">Direccion</string>
+    <string name="pedidoRetira">Retira en Local</string>
+    <string name="pedidoEnviar">Enviar a Domicilio</string>
+    <string name="pedidoHoraEntrega">Hora de Entrega</string>
+    <string name="pedidoHoraEntregaDefault">00:00</string>
+    <string name="pedidoEdtDefault"></string>
+    <string name="pedidoHacerPedido">Hacer Pedido</string>
+    <string name="pedidoVolver">Volver</string>
+    <string name="pedidoAddProducto">Agregar Producto</string>
+    <string name="pedidoQuitarProducto">Quitar Producto</string>
+    <string name="pedidoTotal">Total del Pedido: $</string>
+    <string name="title_activity_historial">historial</string>
+    <string name="title_activity_historial_pedido">HistorialPedidoActivity</string>
+    <string name="btnHistorialNuevo">Nuevo</string>
+    <string name="btnHistorialMenu">Menu</string>
+    <string name ="tvPedidoRealizado">Pedidos Realizados</string>
+
+    <string name="cancelar">Cancelar</string>
+    <string name="verDetalle">Ver Detalle</string>
+
+    <string name="mailPedido">Contacto: </string>
+    <string name="horaEntrega">Fecha de Entrega: </string>
+    <string name="cantidadItemsPedido">Items: </string>
+    <string name="prceioPedido"> A Pagar: </string>
+    <string name="estadoPedido">Estado: </string>
 </resources>
