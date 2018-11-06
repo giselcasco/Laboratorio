@@ -189,8 +189,8 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 }
                 unPedido.setEstado(Pedido.Estado.REALIZADO);
                 pedidoRepository.guardarPedido(unPedido);
-                Intent i = new Intent(AltaPedidoActivity.this, HistorialPedidoActivity.class);
-                startActivity(i);
+                // lo seteamos a una nueva instancia para el proximo pedido
+                Pedido unPedido = new Pedido();
 
                 Runnable r = new Runnable() {
                     @Override
@@ -202,8 +202,8 @@ public class AltaPedidoActivity extends AppCompatActivity {
                         }
                         // buscar pedidos no aceptados y aceptarlos automáticamente
                         List<Pedido> lista = pedidoRepository.getLista();
-                        for(Pedido p:lista){
-                            if(p.getEstado().equals(Pedido.Estado.REALIZADO)) {
+                        for (Pedido p : lista) {
+                            if (p.getEstado().equals(Pedido.Estado.REALIZADO)) {
                                 p.setEstado(Pedido.Estado.ACEPTADO);
                                 Intent i = new Intent();
                                 i.setAction(EstadoPedidoReceiver.ESTADO_ACEPTADO);
@@ -226,8 +226,9 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 Thread unHilo = new Thread(r);
                 unHilo.start();
 
-
-                finish();
+                //Log.d("APP_LAB02","Pedido "+ unPedido.toString());
+                Intent i = new Intent(AltaPedidoActivity.this, HistorialPedidoActivity.class);
+                startActivity(i);
 
     }});
 

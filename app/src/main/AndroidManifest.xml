@@ -18,7 +18,6 @@
         </activity>
         <activity android:name=".ListaProductosActivity" />
         <activity android:name=".AltaPedidoActivity" />
-
         <activity
             android:name=".HistorialPedidoActivity"
             android:label="@string/title_activity_historial_pedido"/>
