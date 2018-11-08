@@ -24,7 +24,7 @@ public class HistorialPedidoActivity extends AppCompatActivity {
     private ArrayAdapter<Pedido> pedidosAdapter;
     private final Pedido unPedido = new Pedido();
     private final PedidoRepository pedidoRepository = new PedidoRepository();
-    private ProductoRepository productoRepository = new ProductoRepository();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

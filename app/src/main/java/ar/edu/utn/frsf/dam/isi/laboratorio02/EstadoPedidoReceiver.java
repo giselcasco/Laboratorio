@@ -1,6 +1,8 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,20 +29,26 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         Bitmap myBitmap= BitmapFactory.decodeResource(context.getResources(),R.drawable.retira);
-
-        Notification notification = new NotificationCompat.Builder(context, "CANAL01")
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+       Notification notification = new NotificationCompat.Builder(context, "CANAL01")
                 .setSmallIcon(R.drawable.retira)
                 .setContentTitle("Laboratorio02")
                 .setContentText("Tu Pedido fue Aceptado")
-                .setContentInfo("El costo será de $" + pedido.total().toString())
-                .setContentInfo("Previsto para " + pedido.getFecha().toString())
+              //  .setContentInfo("El costo será de $" + pedido.total().toString())
+              //  .setContentInfo("Previsto para " + pedido.getFecha().toString())
                 .setLargeIcon(myBitmap)
                 .setStyle(new NotificationCompat.BigPictureStyle()
                         .bigPicture(myBitmap)
                         .bigLargeIcon(null))
                 .build();
-
-
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(context, "CANAL01")
+                        .setSmallIcon(R.drawable.retira)
+                        .setContentTitle("Laboratorio02")
+                        .setContentText("Tu Pedido fue Aceptado")
+                        .setPriority(NotificationManager.IMPORTANCE_DEFAULT)
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true);
         if(intent.getAction().equals(ESTADO_ACEPTADO)){
         int id = intent.getExtras().getInt("idPedido");
         pedido = pedidoRepository.buscarPorId(id);
