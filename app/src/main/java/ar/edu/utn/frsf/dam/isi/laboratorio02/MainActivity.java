@@ -1,5 +1,6 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        createNotificationChannel();
         btnNuevoPedido = (Button) findViewById(R.id.btnMainNuevoPedido);
         btnNuevoPedido.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,22 +47,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //private void createNotificationChannel() {
-            // Crear el canal de notificaciones pero solo para API 26 io superior
-            // dado que NotificationChannel es una clase nueva que no está incluida
-            // en las librerías de soporte qeu brindan compatibilidad hacía atrás
-        //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-        //        CharSequence name = getString(R.string.canal_estado_nombre);
-        //        String description = getString(R.string.canal_estado_descr);
- //               int importance = NotificationManager.IMPORTANCE_DEFAULT;
-                //NotificationChannel channel;
-                ///channel = new NotificationChannel("CANAL01", name, importance);
-                //channel.setDescription(description);
-                    // Registrar el canal en el sistema
-        //        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-                //notificationManager.createNotificationChannel(channel);
-        //    }
-        //}
+    }
 
+    private void createNotificationChannel(){
+        // Crear el canal de notificaciones pero solo para API 26 io superior
+        // dado que NotificationChannel es una clase nueva que no está incluida
+        // en las librerías de soporte qeu brindan compatibilidad hacía atrás
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            CharSequence name = getString(R.string.canal_estado_nombre);
+            String description = getString(R.string.canal_estado_descr);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel;
+            channel = new NotificationChannel("CANAL01", name, importance);
+            channel.setDescription(description);
+            // Registrar el canal en el sistema
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
