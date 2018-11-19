@@ -21,10 +21,20 @@
     <string name="pedidoVolver">Volver</string>
     <string name="pedidoAddProducto">Agregar Producto</string>
     <string name="pedidoQuitarProducto">Quitar Producto</string>
-    <string name="pedidoTotal">Total del Pedido:</string>
+    <string name="pedidoTotal">Total del Pedido: $</string>
     <string name="title_activity_historial">historial</string>
     <string name="title_activity_historial_pedido">HistorialPedidoActivity</string>
     <string name="btnHistorialNuevo">Nuevo</string>
     <string name="btnHistorialMenu">Menu</string>
     <string name ="tvPedidoRealizado">Pedidos Realizados</string>
+    <string name="canal_estado_descr">Laboratorio 03 - Parte 02</string>
+    <string name="canal_estado_nombre">Delivery</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="verDetalle">Ver Detalle</string>
+
+    <string name="mailPedido">Contacto: </string>
+    <string name="horaEntrega">Fecha de Entrega: </string>
+    <string name="cantidadItemsPedido">Items: </string>
+    <string name="prceioPedido"> A Pagar: </string>
+    <string name="estadoPedido">Estado: </string>
 </resources>

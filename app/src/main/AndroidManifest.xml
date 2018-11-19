@@ -20,8 +20,7 @@
         <activity android:name=".AltaPedidoActivity" />
         <activity
             android:name=".HistorialPedidoActivity"
-            android:label="@string/title_activity_historial_pedido"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_historial_pedido"/>
 
         <receiver
             android:name=".EstadoPedidoReceiver"
