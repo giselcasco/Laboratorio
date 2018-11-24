@@ -8,7 +8,7 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 public class PedidoRepository {
 
     private static List<Pedido> LISTA_PEDIDOS = new ArrayList<>();
-    private static int GENERADOR_ID_PEDIDO = 0;
+    private static int GENERADOR_ID_PEDIDO = 0; //esta cosita no funka
 
     public List<Pedido> getLista(){
         return LISTA_PEDIDOS;
@@ -18,9 +18,22 @@ public class PedidoRepository {
         if(p.getId()!=null && p.getId()>0) {
             LISTA_PEDIDOS.remove(p);
         }else{
-            p.setId(GENERADOR_ID_PEDIDO ++);
+            int idNuevo = GENERADOR_ID_PEDIDO ++;
+            for(Pedido pl: LISTA_PEDIDOS){
+                if(pl.getId() > idNuevo) {
+                    idNuevo=pl.getId();
+                }
+            }
+            idNuevo++;
+            p.setId(idNuevo);
         }
         LISTA_PEDIDOS.add(p);
+    }
+
+    public void eliminarPedido(Pedido p){
+        if(p.getId()!=null && p.getId()>0) {
+            LISTA_PEDIDOS.remove(p);
+        }
     }
 
     public Pedido buscarPorId(Integer id){
@@ -29,6 +42,8 @@ public class PedidoRepository {
         }
         return null;
     }
+
+
 
 
 }

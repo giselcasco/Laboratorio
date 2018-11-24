@@ -18,10 +18,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
@@ -30,8 +32,12 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
+import static com.google.gson.internal.bind.TypeAdapters.UUID;
+
+
 public class AltaPedidoActivity extends AppCompatActivity {
     private static final int NUEVO_PEDIDO = 1;
+    private static final int ID_PEDIDO = 0;
     private RadioGroup optPedidoModoEntrega;
     private EditText edtDireccion;
     private ListView listaProductos;
@@ -40,9 +46,12 @@ public class AltaPedidoActivity extends AppCompatActivity {
     private Button quitarProducto;
     private Button hacerPedido;
     private Button volver;
+    private Button cancelarPedido;
     private EditText horaEntrega;
     private EditText edtCorreo;
-    private final Pedido unPedido = new Pedido();
+    private TextView totalPedido;
+    private double precioTotal;
+    private Pedido unPedido = new Pedido();
     private final PedidoRepository pedidoRepository = new PedidoRepository();
     private ProductoRepository productoRepository = new ProductoRepository();
 
@@ -55,23 +64,56 @@ public class AltaPedidoActivity extends AppCompatActivity {
         agregarProducto=(Button) findViewById(R.id.btnPedidoAddProducto);
         hacerPedido=(Button) findViewById(R.id.btnPedidoHacerPedido);
         volver = (Button) findViewById(R.id.btnPedidoVolver);
+        cancelarPedido = (Button) findViewById(R.id.btnCancelar);
         quitarProducto=(Button)findViewById(R.id.btnPedidoQuitarProducto);
         optPedidoModoEntrega =  (RadioGroup) findViewById(R.id.optPedidoModoEntrega);
         listaProductos = (ListView) findViewById(R.id.lstPedidoItems);
         horaEntrega=(EditText) findViewById(R.id.edtPedidoHoraEntrega);
         edtDireccion = (EditText) findViewById(R.id.edtPedidoDireccion);
         edtCorreo = (EditText) findViewById(R.id.edtPedidoCorreo);
-
-
+        totalPedido = (TextView) findViewById(R.id.lblTotalPedido);
         productoAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, unPedido.getDetalle());
         listaProductos.setAdapter(productoAdapter);
-
+        precioTotal = 0;
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        //Punto 4 - Item a
+        Intent i1= getIntent();
+        int idPedido = 0;
+        if(i1.getExtras()!=null){
+            idPedido = i1.getExtras().getInt("ID_PEDIDO");
+        }
+        if(idPedido>0){
+            unPedido = pedidoRepository.buscarPorId(idPedido);
+            edtCorreo.setText(unPedido.getMailContacto());
+            edtDireccion.setText(unPedido.getDireccionEnvio());
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            horaEntrega.setText(sdf.format(unPedido.getFecha()));
+            totalPedido.setText("Total del Pedido: $" + unPedido.total().toString());
+            boolean retira = unPedido.getRetirar();
+            totalPedido.setText("Total del Pedido: $"+ unPedido.total().toString());
+            productoAdapter=new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, unPedido.getDetalle());
+            productoAdapter.notifyDataSetChanged();
+            listaProductos.setAdapter(productoAdapter);
+
+            if(retira) {
+                optPedidoModoEntrega.check(R.id.optPedidoRetira);
+               edtDireccion.setEnabled(false);
+           }
+           else{
+                optPedidoModoEntrega.check(R.id.optPedidoEnviar);
+                edtDireccion.setEnabled(true);
+                edtDireccion.setText(unPedido.getDireccionEnvio());
+            }
+        }else {
+            unPedido = new Pedido();
+        }
+
         quitarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,7 +170,6 @@ public class AltaPedidoActivity extends AppCompatActivity {
                     return;
                 }
 
-                // setear el resto de los atributos del pedido
                 if(edtDireccion.isEnabled() && edtDireccion.length()<=0){
                     Toast.makeText(AltaPedidoActivity.this,"Debe Ingresar una Direccion de Envío",Toast.LENGTH_LONG).show();
                     return;
@@ -152,7 +193,42 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 pedidoRepository.guardarPedido(unPedido);
                 // lo seteamos a una nueva instancia para el proximo pedido
                 Pedido unPedido = new Pedido();
-                Log.d("APP_LAB02","Pedido "+ unPedido.toString());
+
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.currentThread().sleep(10000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        // buscar pedidos no aceptados y aceptarlos automáticamente
+                        List<Pedido> lista = pedidoRepository.getLista();
+                        for (Pedido p : lista) {
+                            if (p.getEstado().equals(Pedido.Estado.REALIZADO)) {
+                                p.setEstado(Pedido.Estado.ACEPTADO);
+                                Intent i = new Intent();
+                                i.setAction(EstadoPedidoReceiver.ESTADO_ACEPTADO);
+                                i.putExtra("idPedido",p.getId());
+                                sendBroadcast(i);
+
+                            }
+
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(AltaPedidoActivity.this,
+                                        "Informacion de pedidos actualizada!",
+                                Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                };
+                Thread unHilo = new Thread(r);
+                unHilo.start();
+
+                //Log.d("APP_LAB02","Pedido "+ unPedido.toString());
                 Intent i = new Intent(AltaPedidoActivity.this, HistorialPedidoActivity.class);
                 startActivity(i);
 
@@ -177,10 +253,24 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 switch(checkedId){
                     case R.id.optPedidoRetira:
                         edtDireccion.setEnabled(false);
+                        unPedido.setRetirar(true);
                         break;
                     case R.id.optPedidoEnviar:
                         edtDireccion.setEnabled(true);
+                        unPedido.setRetirar(false);
                         break;
+                }
+            }
+        });
+
+        //Punto 4 - Item b
+        cancelarPedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(unPedido.getEstado() == Pedido.Estado.ACEPTADO
+                        || unPedido.getEstado() == Pedido.Estado.REALIZADO
+                        || unPedido.getEstado() == Pedido.Estado.EN_PREPARACION){
+                        unPedido.setEstado(Pedido.Estado.CANCELADO);
                 }
             }
         });
@@ -189,14 +279,20 @@ public class AltaPedidoActivity extends AppCompatActivity {
 
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if( resultCode== Activity.RESULT_OK){
-            if(requestCode==NUEVO_PEDIDO){
-                Integer cantidadParam =
+            if(requestCode==NUEVO_PEDIDO) {
+
+                int cantidadParam =
                         data.getExtras().getInt("cantidad");
-                Integer productoParamId =
+                int productoParamId =
                         data.getExtras().getInt("idProducto");
-                unPedido.agregarDetalle(new PedidoDetalle(cantidadParam, productoRepository.buscarPorId(productoParamId)));
+                Producto unProducto = productoRepository.buscarPorId(productoParamId);
+                unPedido.agregarDetalle(new PedidoDetalle(cantidadParam, unProducto));
+                precioTotal = precioTotal + unProducto.getPrecio() * cantidadParam;
+
+                totalPedido.setText("Total del Pedido: $"+ precioTotal);
+                productoAdapter=new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, unPedido.getDetalle());
                 productoAdapter.notifyDataSetChanged();
                 listaProductos.setAdapter(productoAdapter);
             }

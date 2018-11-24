@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +13,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
@@ -51,11 +58,12 @@ public class ListaProductosActivity extends AppCompatActivity {
 
         Bundle parametros = this.getIntent().getExtras();
         if(parametros!=null){
-        int datos = parametros.getInt("NUEVO_PEDIDO");
-        if(datos>0){
-            cantidad.setEnabled(true);
-            agregarProducto.setEnabled(true);
-        }
+            int datos = parametros.getInt("NUEVO_PEDIDO");
+            if(datos>0){
+                cantidad.setText("1");
+                cantidad.setEnabled(true);
+                agregarProducto.setEnabled(true);
+            }
         }
         else{
             cantidad.setEnabled(false);
@@ -66,13 +74,23 @@ public class ListaProductosActivity extends AppCompatActivity {
         agregarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Intent i = new Intent (ListaProductosActivity.this, AltaPedidoActivity.class);
-                Intent i = new Intent();
-                i.putExtra("cantidad", cantidad.getText());
-                i.putExtra("idProducto",idProducto);
-                //startActivity(i);
-                setResult(Activity.RESULT_OK,i);
-                finish();
+                int posicion  = listaProductos.getCheckedItemPosition();
+                Producto unProducto=productoAdapter.getItem(posicion);
+                idProducto=unProducto.getId();
+                if(Integer.parseInt(cantidad.getText().toString()) > 0){
+                    Intent i = new Intent();
+                    i.putExtra("cantidad", Integer.parseInt(cantidad.getText().toString()));
+                    i.putExtra("idProducto",idProducto);
+
+                    //startActivity(i);
+                    setResult(Activity.RESULT_OK,i);
+                    finish();
+                }
+                else{
+                    Toast.makeText(ListaProductosActivity.this,"Ingrese una Cantidad Mayor a Cero",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
             }
         });
 
@@ -83,10 +101,9 @@ public class ListaProductosActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                Categoria categoria = (Categoria)adapterCategoria.getItem(position);
                tvcategoria.setText(categoria.getNombre());
-                //productoAdapter.clear();
-               final ArrayAdapter productoAdapter =  new ArrayAdapter(ListaProductosActivity.this, android.R.layout.simple_list_item_multiple_choice, productoRepository.buscarPorCategoria(categoria));
+               productoAdapter =  new ArrayAdapter(ListaProductosActivity.this, android.R.layout.simple_list_item_multiple_choice, productoRepository.buscarPorCategoria(categoria));
                productoAdapter.notifyDataSetChanged();
-                listaProductos.setAdapter(productoAdapter);
+               listaProductos.setAdapter(productoAdapter);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
