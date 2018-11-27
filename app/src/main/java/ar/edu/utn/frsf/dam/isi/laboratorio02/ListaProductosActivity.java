@@ -45,8 +45,8 @@ public class ListaProductosActivity extends AppCompatActivity {
         final ProductoRepository productoRepository = new ProductoRepository();
 
         setContentView(R.layout.activity_spinner);
-        spinner = (Spinner)findViewById(R.id.spinnerProductosCategoria);
         tvcategoria=(TextView) findViewById(R.id.tvSelectCategoria);
+        spinner = (Spinner)findViewById(R.id.spinnerProductosCategoria);
         adapterCategoria = new ArrayAdapter(this, android.R.layout.simple_spinner_item,productoRepository.getCategorias());
         adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterCategoria);
