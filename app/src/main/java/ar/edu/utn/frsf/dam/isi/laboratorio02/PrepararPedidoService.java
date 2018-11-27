@@ -28,7 +28,7 @@ public class PrepararPedidoService extends IntentService {
 
         try {
 
-            Thread.sleep(20000);
+            Thread.sleep(2000);
 
             listaPedidos = pedidoRepository.getLista();
             for (Pedido p : listaPedidos) {
