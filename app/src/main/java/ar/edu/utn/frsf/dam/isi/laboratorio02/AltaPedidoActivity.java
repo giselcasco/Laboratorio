@@ -33,6 +33,8 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
+import static com.google.gson.internal.bind.TypeAdapters.UUID;
+
 
 public class AltaPedidoActivity extends AppCompatActivity {
     private static final int NUEVO_PEDIDO = 1;
