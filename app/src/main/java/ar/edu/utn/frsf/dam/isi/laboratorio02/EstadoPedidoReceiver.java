@@ -68,8 +68,8 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
                     + pedido.getMailContacto().toString()
                     + " ha cambiado de estado a ESTADO_EN_PREPARACION",Toast.LENGTH_LONG).show();
 
-            mBuilder.setContentInfo("El pedido para " + pedido.getMailContacto().toString() + "está en Preparación");
-            notificationManager.notify(2,mBuilder.build());
+          //  mBuilder.setContentInfo("El pedido para " + pedido.getMailContacto().toString() + "está en Preparación");
+          //  notificationManager.notify(2,mBuilder.build());
 
         }
 
