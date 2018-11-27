@@ -212,13 +212,17 @@ public class AltaPedidoActivity extends AppCompatActivity {
 
                         for (Pedido p : lista) {
                             if (p.getEstado().equals(Pedido.Estado.REALIZADO)) {
-                                p.setEstado(Pedido.Estado.ACEPTADO);
-
-                                Intent i = new Intent(AltaPedidoActivity.this, EstadoPedidoReceiver.class);
-                                i.setAction(EstadoPedidoReceiver.ESTADO_ACEPTADO);
-                                i.putExtra("idPedido",p.getId());
-                                sendBroadcast(i);
-
+                                int x = (Math.random() < 0.8) ? 0:1;
+                                if(x == 0){
+                                    p.setEstado(Pedido.Estado.ACEPTADO);
+                                    Intent i = new Intent(AltaPedidoActivity.this, EstadoPedidoReceiver.class);
+                                    i.setAction(EstadoPedidoReceiver.ESTADO_ACEPTADO);
+                                    i.putExtra("idPedido",p.getId());
+                                    sendBroadcast(i);
+                                }
+                                else{
+                                    p.setEstado(Pedido.Estado.RECHAZADO);
+                                }
                             }
 
                         }
