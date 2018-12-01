@@ -26,23 +26,15 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
     private Pedido pedido = new Pedido();
     private ProductoRepository productoRepository= new ProductoRepository();
     private PedidoRepository pedidoRepository=new PedidoRepository();
+    private PendingIntent pendingIntent;
     @Override
     public void onReceive(Context context, Intent intent) {
 
         Bitmap myBitmap= BitmapFactory.decodeResource(context.getResources(),R.drawable.retira);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, intent.getFlags());
-
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(context, "CANAL01")
-                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                        .setSmallIcon(R.drawable.retira)
-                        .setContentTitle("Laboratorio02")
-                        .setContentText("Tu Pedido fue Aceptado  -- CANAL02")
-                        .setPriority(NotificationManager.IMPORTANCE_DEFAULT)
-                        .addAction(R.drawable.envio, "pending",pendingIntent)
-                        .setAutoCancel(true);
-
+        Intent i = new Intent(context, HistorialPedidoActivity.class);
+        pendingIntent = PendingIntent.getActivity(context, 0, i, intent.getFlags());
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
         if(intent.getAction().equals(ESTADO_ACEPTADO)){
         int id = intent.getExtras().getInt("idPedido");
         pedido = pedidoRepository.buscarPorId(id);
@@ -67,12 +59,19 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
         if(intent.getAction().equals(ESTADO_EN_PREPARACION)){
             int id = intent.getExtras().getInt("idPedido");
             pedido = pedidoRepository.buscarPorId(id);
-            Toast.makeText(context,"Pedido para "
-                    + pedido.getMailContacto().toString()
-                    + " ha cambiado de estado a ESTADO_EN_PREPARACION",Toast.LENGTH_LONG).show();
 
-            mBuilder.setContentInfo("El pedido para " + pedido.getMailContacto().toString() + "está en Preparación");
-            notificationManager.notify(1,mBuilder.build());
+            //Toast.makeText(context,"Pedido para "+ pedido.getMailContacto().toString() + " ha cambiado de estado a ESTADO_EN_PREPARACION",Toast.LENGTH_LONG).show();
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(context, "CANAL01")
+                            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                            .setSmallIcon(R.drawable.retira)
+                            .setContentTitle("Laboratorio03 - Parte02")
+                            .setContentText("El pedido para " + pedido.getMailContacto().toString() + " está en Preparación")
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                            //.addAction(R.drawable.envio, "pending",pendingIntent)
+                            .setContentIntent(pendingIntent)
+                            .setAutoCancel(true);
+            notificationManager.notify(99,mBuilder.build());
 
         }
 
