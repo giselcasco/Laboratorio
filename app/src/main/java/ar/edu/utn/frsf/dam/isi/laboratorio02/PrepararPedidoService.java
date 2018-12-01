@@ -18,7 +18,7 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoAdapter;
 
 public class PrepararPedidoService extends IntentService {
     private PedidoRepository pedidoRepository = new PedidoRepository();
-    private List<Pedido> listaPedidos;
+    private List<Pedido> listaPedidos = pedidoRepository.getLista();
 
     public PrepararPedidoService() {
         super("PrepararPedidoService");
@@ -27,10 +27,10 @@ public class PrepararPedidoService extends IntentService {
     protected void onHandleIntent(Intent intent) {
 
         try {
+            //dormir el hilo por 20 segundos
+            Thread.sleep(20000);
 
-            Thread.sleep(2000);
-
-            listaPedidos = pedidoRepository.getLista();
+            List<Pedido>  listaPedidos = pedidoRepository.getLista();
             for (Pedido p : listaPedidos) {
                 if (p.getEstado().equals(Pedido.Estado.ACEPTADO)) {
                     p.setEstado(Pedido.Estado.EN_PREPARACION);
@@ -38,9 +38,8 @@ public class PrepararPedidoService extends IntentService {
                     Intent i = new Intent(this, EstadoPedidoReceiver.class);
                     i.setAction(EstadoPedidoReceiver.ESTADO_EN_PREPARACION);
                     i.putExtra("idPedido",p.getId());
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, 0);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, 0);
 
                     sendBroadcast(i);
 
