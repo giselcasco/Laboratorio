@@ -30,14 +30,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, PrepararPedidoService.class);
-
                 startService(i);
                 finish();
             }
         });
 
 
-    btnNuevoPedido = (Button) findViewById(R.id.btnMainNuevoPedido);
+        btnNuevoPedido = (Button) findViewById(R.id.btnMainNuevoPedido);
         btnNuevoPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
