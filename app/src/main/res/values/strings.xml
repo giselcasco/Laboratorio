@@ -29,6 +29,7 @@
     <string name ="tvPedidoRealizado">Pedidos Realizados</string>
     <string name="canal_estado_descr">Laboratorio 03 - Parte 02</string>
     <string name="canal_estado_nombre">Delivery</string>
+    <string name="default_notification_channel_id">CANAL01</string>
     <string name="cancelar">Cancelar</string>
     <string name="verDetalle">Ver Detalle</string>
     <string name="prepararPedido">Preparar Pedidos</string>
