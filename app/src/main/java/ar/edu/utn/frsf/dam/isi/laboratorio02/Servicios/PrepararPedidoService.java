@@ -1,4 +1,4 @@
-package ar.edu.utn.frsf.dam.isi.laboratorio02;
+package ar.edu.utn.frsf.dam.isi.laboratorio02.Servicios;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.EstadoPedidoReceiver;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoAdapter;

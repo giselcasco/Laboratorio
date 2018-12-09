@@ -35,9 +35,11 @@
         </receiver>
 
         <service
-            android:name=".PrepararPedidoService"
+            android:name=".Servicios.PrepararPedidoService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".ConfiguracionActivity"></activity>
     </application>
 
 </manifest>
