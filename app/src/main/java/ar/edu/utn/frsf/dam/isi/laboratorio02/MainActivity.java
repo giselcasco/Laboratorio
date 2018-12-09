@@ -3,7 +3,6 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,12 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.Servicios.PrepararPedidoService;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btnNuevoPedido;
     private Button btnHistorial;
     private Button btnListaProductos;
     private Button btnPrepararPedidos;
+    private Button btnConfiguracion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         createNotificationChannel();
 
+        btnConfiguracion= (Button)findViewById(R.id.btnConfiguracion);
+        btnConfiguracion.setOnClickListener(  new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, ConfiguracionActivity.class);
+                startActivity(i);
+            }
+        });
 
         btnPrepararPedidos= (Button)findViewById(R.id.btnPrepararPedidos);
         btnPrepararPedidos.setOnClickListener(  new View.OnClickListener() {

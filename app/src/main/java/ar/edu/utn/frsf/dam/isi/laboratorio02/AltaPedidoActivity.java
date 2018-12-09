@@ -3,9 +3,11 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.widget.AdapterView;
@@ -82,7 +84,9 @@ public class AltaPedidoActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        boolean contactoPreference = SP.getBoolean("contacto",true);
+        boolean retiraPrefecence = SP.getBoolean("retira",true);
         //Punto 4 - Item a
         Intent i1= getIntent();
         int idPedido = 0;
@@ -113,6 +117,13 @@ public class AltaPedidoActivity extends AppCompatActivity {
             }
         }else {
             unPedido = new Pedido();
+            if(retiraPrefecence){
+                optPedidoModoEntrega.check(R.id.optPedidoRetira);
+                edtDireccion.setEnabled(false);
+            }
+            if(contactoPreference){
+                edtCorreo.setText("gisel@gmail.com");
+            }
         }
 
         quitarProducto.setOnClickListener(new View.OnClickListener() {

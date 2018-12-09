@@ -5,6 +5,11 @@
     <string name="productList">Lista de Productos</string>
     <string name="cantPedir">Cantidad a Pedir</string>
     <string name="cantProducto">0</string>
+    <string name="configuracion">Configuración</string>
+    <string name="checkBoxTitle1">Retirar por Defecto</string>
+    <string name="checkBoxSummary1">El Pedido es para Retirar</string>
+    <string name="checkBoxTitle2">Correo Electrónico</string>
+    <string name="checkBoxSummary2">Se usará por Defecto</string>
     <string name="btnAgregarProducto">Agregar</string>
     <string name="btnNuevoPedido">Nuevo Pedido</string>
     <string name="historial_de_pedidos">Historial Pedidos </string>
@@ -26,7 +31,7 @@
     <string name="title_activity_historial_pedido">HistorialPedidoActivity</string>
     <string name="btnHistorialNuevo">Nuevo</string>
     <string name="btnHistorialMenu">Menu</string>
-    <string name ="tvPedidoRealizado">Pedidos Realizados</string>
+    <string name="tvPedidoRealizado">Pedidos Realizados</string>
     <string name="canal_estado_descr">Laboratorio 03 - Parte 02</string>
     <string name="canal_estado_nombre">Delivery</string>
     <string name="cancelar">Cancelar</string>
