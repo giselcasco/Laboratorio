@@ -20,19 +20,26 @@
         <activity android:name=".AltaPedidoActivity" />
         <activity
             android:name=".HistorialPedidoActivity"
-            android:label="@string/title_activity_historial_pedido"/>
+            android:label="@string/title_activity_historial_pedido" />
 
         <receiver
             android:name=".EstadoPedidoReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name=".EstadoPedidoReceiver.ESTADO_ACEPTADO"/>
-                <action android:name=".EstadoPedidoReceiver.ESTADO_CANCELADO"/>
-                <action android:name=".EstadoPedidoReceiver.ESTADO_EN_PREPARACION"/>
-                <action android:name=".EstadoPedidoReceiver.ESTADO_LISTO"/>
+                <action android:name="ar.edu.utn.frsf.dam.isi.laboratorio2.ESTADO_ACEPTADO" />
+                <action android:name="ar.edu.utn.frsf.dam.isi.laboratorio2.ESTADO_CANCELADO" />
+                <action android:name="ar.edu.utn.frsf.dam.isi.laboratorio2.ESTADO_EN_PREPARACION" />
+                <action android:name="ar.edu.utn.frsf.dam.isi.laboratorio2.ESTADO_LISTO" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".Servicios.PrepararPedidoService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".ConfiguracionActivity"></activity>
     </application>
 
 </manifest>

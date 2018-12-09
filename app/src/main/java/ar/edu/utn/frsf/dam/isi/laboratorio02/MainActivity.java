@@ -8,18 +8,44 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import ar.edu.utn.frsf.dam.isi.laboratorio02.Servicios.PrepararPedidoService;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button btnNuevoPedido;
     private Button btnHistorial;
     private Button btnListaProductos;
+    private Button btnPrepararPedidos;
+    private Button btnConfiguracion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         createNotificationChannel();
+
+        btnConfiguracion= (Button)findViewById(R.id.btnConfiguracion);
+        btnConfiguracion.setOnClickListener(  new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, ConfiguracionActivity.class);
+                startActivity(i);
+            }
+        });
+
+        btnPrepararPedidos= (Button)findViewById(R.id.btnPrepararPedidos);
+        btnPrepararPedidos.setOnClickListener(  new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, PrepararPedidoService.class);
+                startService(i);
+                finish();
+            }
+        });
+
+
         btnNuevoPedido = (Button) findViewById(R.id.btnMainNuevoPedido);
         btnNuevoPedido.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +74,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Toast.makeText(MainActivity.this,"SALIENDO", Toast.LENGTH_LONG).show();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(MainActivity.this,"DESTRUYENDO", Toast.LENGTH_LONG).show();
+    }
     private void createNotificationChannel(){
         // Crear el canal de notificaciones pero solo para API 26 io superior
         // dado que NotificationChannel es una clase nueva que no está incluida

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="retira"
+        android:title="@string/checkBoxTitle1"
+        android:summary="@string/checkBoxSummary1"/>
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="contacto"
+        android:title="@string/checkBoxTitle2"
+        android:summary="@string/checkBoxSummary2"/>
+</PreferenceScreen>
